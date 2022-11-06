@@ -3,19 +3,28 @@ import {
 } from '@chakra-ui/react'
 import { collection, addDoc, GeoPoint, Timestamp } from "firebase/firestore";
 import { firestore } from '../config/firebase';
+import { useGeolocated } from "react-geolocated";
 
 import { Container } from '../components/Container'
 import { useAuth } from '../context/AuthContext';
 
 const Index = () => {
   const { user } = useAuth()
+
+  const { coords, isGeolocationAvailable, isGeolocationEnabled } =
+    useGeolocated({
+        positionOptions: {
+            enableHighAccuracy: false,
+        },
+        userDecisionTimeout: 5000,
+    });
   
   const clock = async (type) => {
     try {
       const now = Date.now()
       const docRef = await addDoc(collection(firestore, "checklogs"), {
         email: user.email,
-        coordinate: new GeoPoint(0, 0),
+        coordinate: new GeoPoint(coords?.latitude || 0, coords?.longitude || 0),
         image_url: 'https://ngorder-1.sgp1.digitaloceanspaces.com/7/products/kaos-harta-tahta-1665990804705.jpg',
         note: 'asdasda',
         timestamp: new Timestamp(Math.floor(now / 1000), 0),
@@ -27,7 +36,11 @@ const Index = () => {
     }
   }
 
-  return (
+  return !isGeolocationAvailable ? (
+    <div>Your browser does not support Geolocation</div>
+  ) : !isGeolocationEnabled ? (
+    <div>Geolocation is not enabled</div>
+  ) : coords ? (
     <Container height="100vh">
       <Container
         flexDirection="row"
@@ -59,7 +72,9 @@ const Index = () => {
         </Button>
       </Container>
     </Container>
-  )
+  ) : (
+    <div>Getting the location data&hellip; </div>
+  );
 }
 
 export default Index
