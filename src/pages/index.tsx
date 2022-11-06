@@ -24,6 +24,7 @@ const Index = () => {
       const now = Date.now()
       const docRef = await addDoc(collection(firestore, "checklogs"), {
         email: user.email,
+        name: user.displayName,
         coordinate: new GeoPoint(coords?.latitude || 0, coords?.longitude || 0),
         image_url: 'https://ngorder-1.sgp1.digitaloceanspaces.com/7/products/kaos-harta-tahta-1665990804705.jpg',
         note: 'asdasda',
