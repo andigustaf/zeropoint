@@ -6,22 +6,28 @@
     "start": "next start"
   },
   "dependencies": {
-    "@chakra-ui/icons": "^2.0.2",
+    "@chakra-ui/icons": "^2.0.11",
     "@chakra-ui/react": "^2.2.1",
     "@chakra-ui/theme-tools": "^2.0.2",
     "@emotion/react": "^11.9.0",
     "@emotion/styled": "^11.9.0",
+    "axios": "^1.1.3",
     "firebase": "^9.6.7",
     "framer-motion": "^6.3.0",
     "next": "latest",
+    "pigeon-maps": "^0.21.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-geolocated": "^4.0.3"
+    "react-geolocated": "^4.0.3",
+    "react-html5-camera-photo": "^1.5.10",
+    "react-icons": "^4.6.0"
   },
   "devDependencies": {
     "@types/node": "^18.0.0",
     "@types/react": "^18.0.0",
     "@types/react-dom": "^18.0.0",
+    "@types/react-html5-camera-photo": "^1.5.1",
+    "@types/react-icons": "^3.0.0",
     "typescript": "^4.7.2"
   }
 }

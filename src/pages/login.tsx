@@ -1,7 +1,8 @@
-import { Button } from '@chakra-ui/react'
+import { Button, Box, Flex, Stack, Text } from '@chakra-ui/react'
 import { useRouter } from 'next/router'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import { useAuth } from '../context/AuthContext'
+import 'react-html5-camera-photo/build/css/index.css';
 
 const Login = () => {
   const router = useRouter()
@@ -23,7 +24,43 @@ const Login = () => {
   }
 
   return (
-    <Button onClick={handleLogin}>Login</Button>
+    <Flex
+      justify="center"
+      align="center"
+      minH={"100vh"}
+      bgAttachment="fixed"
+      bgSize="contain"
+      bgRepeat="no-repeat"
+      bgPosition="bottom"
+      bg="gray.100"
+      w="full"
+    >
+      <Box w="full" maxW={"lg"} px={6}>
+        <Box
+          marginTop={6}
+          rounded={"lg"}
+          bg="white"
+          boxShadow={"lg"}
+          p={8}
+          w="full"
+          maxW="md"
+        >
+        <Stack align={"start"} mb={4}>
+          <Text
+            fontSize={"lg"}
+            fontWeight="semibold"
+            color={"gray.600"}
+          >
+            Simple Attendance App
+          </Text>
+          <Text fontSize={"md"} color={"gray.600"}>
+            Sign in to use of our cool features ✌️
+          </Text>
+          </Stack>
+          <Button colorScheme='blue' mt={2} w="full" onClick={handleLogin}>Sign In Now</Button>
+        </Box>
+      </Box>
+    </Flex>
   )
 }
 
