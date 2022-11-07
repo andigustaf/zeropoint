@@ -1,5 +1,5 @@
 import { Box, Button, Flex, Grid, GridItem, Heading, Stack, Table, TableContainer, Tag, Tbody, Td, Text, Tr } from '@chakra-ui/react'
-import { collection, onSnapshot, query, where, limit } from "firebase/firestore";
+import { collection, onSnapshot, query, where, limit, Timestamp, getDocs } from "firebase/firestore";
 import { firestore } from '../../config/firebase';
 import { useGeolocated } from "react-geolocated";
 import { WarningIcon, ChevronRightIcon } from '@chakra-ui/icons'
@@ -15,29 +15,24 @@ const Index = () => {
   const [dateState, setDateState] = useState(new Date())
   const [attendances, setAttendances] = useState([])
 
-  const checklogCollection = collection(firestore, "checklogs")
-
   useEffect(() => {
-
-    let startOfDay = new Date(dateState.getFullYear(), dateState.getMonth(), dateState.getDate(), 0, 0, 0)
-    console.log(startOfDay.toLocaleDateString())
-    let endOfDay = new Date(dateState.getFullYear(), dateState.getMonth(), dateState.getDate(), 23, 59, 59)
-    const unsub = onSnapshot(
-      query(checklogCollection,
-      where('email', '==', user.email), 
-      // where('timestamp', '<', Timestamp.fromDate(startOfDay)),
+    const startOfDay = new Date(dateState.getFullYear(), dateState.getMonth(), dateState.getDate(), 0, 0, 0)
+    const q = query(collection(firestore, "checklogs"),
+      where('email', '==', user.email),
+      where('timestamp', '>=', Timestamp.fromDate(startOfDay)),
       limit(6)
-    ), (querySnapshot) => {
+    )
+
+    const unsubscribe = onSnapshot(q, (snapshot) => {
       const items = []
-      querySnapshot.forEach((doc) => {
+      for (const doc of snapshot.docs) {
         items.push(doc.data())
-      })
-      setAttendances(items)
-      console.log('items:')
-      console.log(items)
+      }
+      setAttendances([...items])
     })
+
     return () => {
-      unsub()
+      unsubscribe()
     }
   }, [])
   
