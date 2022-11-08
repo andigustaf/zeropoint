@@ -31,7 +31,7 @@ export const menus: Menu[] = [
     role: ["admin"],
     url: "/admin/employees",
     icon: IoPeopleCircleOutline,
-    title: "Employee",
+    title: "Karyawan",
     items: [],
   },
 ];

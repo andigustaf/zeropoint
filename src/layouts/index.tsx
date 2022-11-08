@@ -9,7 +9,7 @@ const IndexLayout = ({ children }: { children: JSX.Element }) => {
 
   if (["/login", "/attendance/selfie"].includes(pathname)) {
     return <DefaultLayout>{children}</DefaultLayout>;
-  } else if (["/admin"].includes(pathname)) {
+  } else if (pathname.includes("/admin")) {
     return <PanelLayout>{children}</PanelLayout>
   } else {
     return <ProtectedLayout>{children}</ProtectedLayout>;

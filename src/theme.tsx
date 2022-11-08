@@ -1,5 +1,5 @@
 import { extendTheme } from '@chakra-ui/react'
-import { createBreakpoints } from '@chakra-ui/theme-tools'
+import { createBreakpoints, StyleConfig, StyleFunctionProps } from '@chakra-ui/theme-tools'
 
 const fonts = { 
   body: `'Inter', sans-serif` ,
@@ -23,7 +23,84 @@ const breakpoints = createBreakpoints({
   '2xl': '1440px'
 })
 
+const button: StyleConfig = {
+  baseStyle: {
+    fontWeight: 'regular',
+    borderRadius: '0.5rem',
+  },
+  sizes: {
+    xs: {
+      h: '32px',
+      fontSize: 'xs',
+      px: '16px',
+    },
+    sm: {
+      h: '40px',
+      fontSize: 'sm',
+      px: '16px',
+    },
+    md: {
+      h: '48px',
+      fontSize: 'md',
+      px: '16px',
+    },
+    lg: {
+      h: '56px',
+      fontSize: 'lg',
+      px: '16px',
+    },
+  },
+  variants: {
+    solid: {
+      bg: 'primary.50',
+      color: 'white',
+      _hover: {
+        color: 'white',
+        bg: 'primary.60',
+      },
+      _active: {
+        color: 'white',
+        bg: 'primary.60',
+      },
+    },
+    outline: {
+      bg: 'transparent',
+      color: 'primary.50',
+      borderColor: 'primary.50',
+      _hover: {
+        bg: 'transparent',
+        color: 'primary.50',
+        borderColor: 'primary.50',
+      },
+      _active: {
+        bg: 'transparent',
+        color: 'primary.50',
+        borderColor: 'primary.50',
+      },
+    },
+    tersier: {
+      bg: 'slate-background.20',
+      color: 'basic.60',
+      _hover: {
+        bg: 'slate-background.20',
+        color: 'basic.60',
+      },
+      _active: {
+        bg: 'slate-background.20',
+        color: 'basic.60',
+      },
+    }
+  },
+  defaultProps: {
+    size: 'md',
+    variant: 'solid',
+  },
+};
+
 const theme = extendTheme({
+  components: {
+    Button: button
+  },
   semanticTokens: {
     colors: {
       text: {
@@ -61,7 +138,11 @@ const theme = extendTheme({
       50: "#6B737B",
       60: "#212529",
     },
-    'basic-disabled': '#AAAAAA',
+    'slate-background': {
+      20: '#F4F4F4',
+      50: '#FFFFFF'
+    },
+    'slate-disabled': '#AAAAAA',
     black: '#16161D',
   },
   fonts,
