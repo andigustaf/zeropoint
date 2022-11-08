@@ -5,8 +5,9 @@ import {
   signOut,
   onAuthStateChanged,
 } from 'firebase/auth'
-import { auth } from '../config/firebase'
+import { auth, firestore } from '../config/firebase'
 import { User } from '../types'
+import { addDoc, collection, doc, setDoc } from 'firebase/firestore';
 
 const provider = new GoogleAuthProvider();
 const AuthContext = createContext<any>({})
@@ -28,7 +29,15 @@ export const AuthContextProvider = ({
           uid: user.uid,
           email: user.email,
           displayName: user.displayName,
+          image: user.photoURL,
         })
+        setDoc(doc(firestore, "users", user.uid), {
+          email: user.email,
+          displayName: user.displayName,
+          image: user.photoURL,
+        }, {
+          merge: true
+        });
       } else {
         setUser(null)
       }
