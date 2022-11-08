@@ -1,4 +1,4 @@
-import { Button, Box, Flex, Stack, Text } from '@chakra-ui/react'
+import { Button, Box, Flex, Stack, Text, Image } from '@chakra-ui/react'
 import { useRouter } from 'next/router'
 import React, { useEffect } from 'react'
 import { useAuth } from '../context/AuthContext'
@@ -32,14 +32,14 @@ const Login = () => {
       bgSize="contain"
       bgRepeat="no-repeat"
       bgPosition="bottom"
-      bg="gray.100"
+      bg="white"
       w="full"
     >
       <Box w="full" maxW={"lg"} px={6}>
         <Box
-          marginTop={6}
+          marginTop={0}
           rounded={"lg"}
-          bg="white"
+          bg="gray.50"
           boxShadow={"lg"}
           p={8}
           w="full"

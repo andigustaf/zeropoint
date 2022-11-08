@@ -1,5 +1,5 @@
 import { Box, Button, Flex, Image, Input, InputGroup, InputLeftElement, Stack, useToast } from '@chakra-ui/react'
-import { collection, addDoc, GeoPoint, Timestamp, onSnapshot, query, where, limit } from "firebase/firestore";
+import { collection, addDoc, GeoPoint, Timestamp, onSnapshot, query, where, limit, orderBy, getDocs } from "firebase/firestore";
 import { firestore } from '../../config/firebase';
 import { useGeolocated } from "react-geolocated";
 import { EditIcon } from '@chakra-ui/icons'
@@ -11,12 +11,14 @@ import { FiCamera } from 'react-icons/fi'
 import { useRouter } from 'next/router';
 import axios from 'axios';
 import cdnConfig from '../../config/cdn';
+import { Navbar } from '../../components/Navbar';
 
 const AttendanceForm = () => {
   const router = useRouter()
   const toast = useToast()
   const { user } = useAuth()
   const { attendance, setAttendance } = useAttendance()
+  const [isLoading, setIsLoading] = useState(false)
   
   const [attendances, setAttendances] = useState([])
 
@@ -49,31 +51,42 @@ const AttendanceForm = () => {
   });
 
   const clock = async (type) => {
-    let imageUrl = attendance.imageUrl
-    if (!attendance.imageUrl) {
-      const uploadImage = await axios.post(cdnConfig.url, {
-        image: attendance.base64Image
-      }, {
-        headers: {
-            'X-API-KEY': cdnConfig.apiKey
-        }
-      })
-      imageUrl = uploadImage.data.data.image_url
-      setAttendance({...attendance, imageUrl: imageUrl})
-    }
-
-    if (!imageUrl) {
-      toast({
-        title: formatAttendanceType(type) + ' failed',
-        description: 'please take photo first',
-        status: 'error',
-        duration: 6000,
-        isClosable: true,
-      })
-      return
-    }
-
+    setIsLoading(true)
     try {
+      const lastRecord: any = await getTodayLastRecord(user.email)
+      if (lastRecord) {
+        if (lastRecord.type == type) {
+          throw {
+            message: `you have ${formatAttendanceType(type)} before`
+          }
+        }
+      }
+
+      if (!attendance.base64Image) {
+        throw {
+          message: 'please take photo first'
+        }
+      }
+
+      let imageUrl = attendance.imageUrl
+      if (!attendance.imageUrl) {
+        const uploadImage = await axios.post(cdnConfig.url, {
+          image: attendance.base64Image
+        }, {
+          headers: {
+              'X-API-KEY': cdnConfig.apiKey
+          }
+        })
+        imageUrl = uploadImage.data.data.image_url
+        setAttendance({...attendance, imageUrl: imageUrl})
+      }
+
+      if (!imageUrl) {
+        throw {
+          message: 'please take photo first'
+        }
+      }
+
       const now = Date.now()
       const docRef = await addDoc(collection(firestore, "checklogs"), {
         email: user.email,
@@ -86,15 +99,18 @@ const AttendanceForm = () => {
       });
       setAttendance({...attendance, note:'', base64Image:'', imageUrl: ''})
       console.log("Document written with ID: ", docRef.id);
-      router.push('/attendance')
+
       toast({
         title: formatAttendanceType(type) + ' success',
         status: 'success',
         duration: 6000,
         isClosable: true,
       })
+      setIsLoading(false)
+      router.push('/attendance')
     } catch (e) {
-      console.error("Error adding document: ", e);
+      console.log(e.message)
+      setIsLoading(false)
       toast({
         title: formatAttendanceType(type) + ' failed',
         description: e.message,
@@ -106,7 +122,7 @@ const AttendanceForm = () => {
   }
 
   const takePhoto = () => {
-    router.push('/attendance/selfie')
+    router.push('/attendance/photo')
   }
 
   const formatAttendanceType = (str) => {
@@ -115,74 +131,123 @@ const AttendanceForm = () => {
     return str
   }
 
+  const getTodayLastRecord = async (email) => {
+    let date = new Date()
+    const startOfDay = new Date(date.getFullYear(), date.getMonth(), date.getDate(), 0, 0, 0)
+    const endOfDay = new Date(date.getFullYear(), date.getMonth(), date.getDate(), 23, 59, 59)
+    const snapshot = await getDocs(query(
+      collection(firestore, 'checklogs'),
+      orderBy('timestamp', 'desc'),
+      where('email', '==', email),
+      where('timestamp', '>=', Timestamp.fromDate(startOfDay)),
+      where('timestamp', '<=', Timestamp.fromDate(endOfDay)),
+    ))
+    if (!snapshot.empty && snapshot.docs[0]) {
+      return {
+        id: snapshot.docs[0].id,
+        ...snapshot.docs[0].data()
+      }
+    }
+    return null
+  }
+
   return (
-    <Flex
-      justify="center"
-      minH={"100vh"}
-      bg="gray.100"
-      w="full"
-    >
-      <Box w="full">
-        <Box w="full" height={'200px'}>
-          <PigeonMap center={[coords?.latitude || 0,coords?.longitude || 0]} zoom={17} />
-        </Box>
-
-        <Flex w="full" px={0} justifyContent={'center'}>
-          <Box
-            marginTop={{base:0, md:6}}
-            rounded={"lg"}
-            bg="white"
-            p={8}
-            w="full"
-            maxW="md"
-          >
-            <Stack spacing={4}>
-              <InputGroup>
-                <InputLeftElement
-                  pointerEvents='none'
-                  children={<EditIcon color='gray.300' />}
-                />
-                <Input variant='flushed' type='text' placeholder='Notes' value={attendance.note} onChange={(e) => {
-                  setAttendance({...attendance, note: e.target.value })
-                }} />
-              </InputGroup>
-
-              <InputGroup>
-              <InputLeftElement
-                  pointerEvents='none'
-                  color={'gray.300'}
-                  children={<FiCamera />}
-                />
-                {attendance.base64Image ? (
-                  <Input variant='flushed' placeholder='Photo' readOnly={true} height={attendance.base64Image ? '180px' : ''}/>
-                ) : (
-                  <Input variant='flushed' placeholder='Photo' readOnly={true} />
-                )}
-                {attendance.base64Image ? (
-                  <InputLeftElement width={'160px'} paddingLeft={10} top={'85px'}>
-                    <Image
-                      borderRadius='md'
-                      boxSize='120px'
-                      src={attendance.base64Image}
-                      alt='photo'
-                    />
-                  </InputLeftElement>
-                ) : null}
-                <InputLeftElement width={'8.5rem'} paddingLeft={10}>
-                  <Button h='1.75rem' size='sm' onClick={takePhoto}>
-                    Take Photo
-                  </Button>
-                </InputLeftElement>
-              </InputGroup>
-
-              <Button textTransform={'capitalize'} colorScheme='blue' w="full" onClick={() => clock(attendance.type)}>
-                { formatAttendanceType(attendance.type) }
-              </Button>
-            </Stack>
+    <>
+      <Navbar />
+      <Flex
+        justify="center"
+        minH={"100vh"}
+        bg="gray.100"
+        w="full"
+      >
+        <Box w="full">
+          <Box w="full" height={'225px'}>
+            <PigeonMap center={[coords?.latitude || 0,coords?.longitude || 0]} zoom={17} />
           </Box>
-        </Flex>
-      </Box>
-    </Flex>
+
+          <Flex w="full" px={0} justifyContent={'center'}>
+            <Box
+              marginTop={{base:0, md:6}}
+              bg="white"
+              p={8}
+              w="full"
+              maxW="md"
+            >
+              <Stack spacing={4}>
+                <InputGroup>
+                  <InputLeftElement
+                    pointerEvents='none'
+                    children={<EditIcon color='gray.300' />}
+                  />
+                  <Input variant='flushed' type='text' placeholder='Notes' value={attendance.note} onChange={(e) => {
+                    setAttendance({...attendance, note: e.target.value })
+                  }} />
+                </InputGroup>
+
+                <InputGroup>
+                <InputLeftElement
+                    pointerEvents='none'
+                    color={'gray.300'}
+                    children={<FiCamera />}
+                  />
+                  {attendance.base64Image ? (
+                    <Input variant='flushed' placeholder='Photo' readOnly={true} height={attendance.base64Image ? '180px' : ''}/>
+                  ) : (
+                    <Input variant='flushed' placeholder='Photo' readOnly={true} />
+                  )}
+                  {attendance.base64Image ? (
+                    <InputLeftElement width={'160px'} paddingLeft={10} top={'85px'}>
+                      <Image
+                        borderRadius='md'
+                        boxSize='120px'
+                        src={attendance.base64Image}
+                        alt='photo'
+                      />
+                    </InputLeftElement>
+                  ) : null}
+                  <InputLeftElement width={'8.5rem'} paddingLeft={10}>
+                    <Button h='1.75rem' size='sm' onClick={takePhoto}>
+                      Take Photo
+                    </Button>
+                  </InputLeftElement>
+                </InputGroup>
+
+                <Button isLoading={isLoading} textTransform={'capitalize'} colorScheme='blue' w="full" onClick={() => clock(attendance.type)}>
+                  { formatAttendanceType(attendance.type) }
+                </Button>
+                {/* <Button onClick={async() => {
+                  let date = new Date()
+                  const startOfDay = new Date(date.getFullYear(), date.getMonth(), date.getDate(), 0, 0, 0)
+                  const endOfDay = new Date(date.getFullYear(), date.getMonth(), date.getDate(), 23, 59, 59)
+                  const snapshot = await getDocs(query(
+                    collection(firestore, 'checklogs'),
+                    orderBy('timestamp', 'desc'),
+                    where('email', '==', user.email),
+                    where('timestamp', '>=', Timestamp.fromDate(startOfDay)),
+                    where('timestamp', '<=', Timestamp.fromDate(endOfDay)),
+                  ))
+                  if (!snapshot.empty && snapshot.docs[0]) {
+                    let date = format(new Date(snapshot.docs[0].data().timestamp.seconds * 1000), 'Ymd HH:ii:ss')
+                      console.log({
+                        firstRow: true,
+                        ...snapshot.docs[0].data(), display_date: date
+                      })
+                    for (const doc of snapshot.docs) {
+                      let date = format(new Date(doc.data().timestamp.seconds * 1000), 'Ymd HH:ii:ss')
+                      console.log({
+                        ...doc.data(), display_date: date
+                      })
+                    }
+                  }
+                }}>
+                  Cek validation
+                </Button> */}
+              </Stack>
+            </Box>
+          </Flex>
+        </Box>
+      </Flex>
+    </>
     );
   }
   
