@@ -122,7 +122,7 @@ const AttendanceForm = () => {
   }
 
   const takePhoto = () => {
-    router.push('/attendance/photo')
+    router.push('/attendance/selfie')
   }
 
   const formatAttendanceType = (str) => {
@@ -156,8 +156,6 @@ const AttendanceForm = () => {
       <Navbar />
       <Flex
         justify="center"
-        minH={"100vh"}
-        bg="gray.100"
         w="full"
       >
         <Box w="full">

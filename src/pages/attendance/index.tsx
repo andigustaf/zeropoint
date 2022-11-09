@@ -97,7 +97,7 @@ const Index = () => {
           <Box
             marginTop={6}
             rounded={"lg"}
-            bg="white"
+            bg="gray.50"
             boxShadow={"lg"}
             p={8}
             w="full"
@@ -124,12 +124,12 @@ const Index = () => {
           <Box
             rounded={"lg"}
             marginTop={6}
-            bg="white"
+            bg="gray.50"
             boxShadow={"lg"}
             w="full"
             maxW="md"
           >
-          <Flex bg="white" justifyContent="space-between" p={2} paddingX={4} roundedTop={"lg"} >
+          <Flex justifyContent="space-between" p={2} paddingX={4} roundedTop={"lg"} >
             <Text fontWeight={'semibold'}>Attendance Log</Text>
             <Text><Button onClick={()=>gotoLogs()} size={'sm'} variant={'link'}>View Log</Button></Text>
           </Flex>

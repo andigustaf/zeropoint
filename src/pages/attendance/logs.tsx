@@ -175,11 +175,11 @@ const AttendanceLog = () => {
                         </GridItem>
                       </Grid>
                     </AccordionButton>
-                    <AccordionPanel pb={4} marginX={-4}>
+                    <AccordionPanel pb={0} marginX={-4}>
                       <Stack spacing={0}>
                       { g.data.map(attendance => (
                         <div key={attendance.id}>
-                          <Grid templateColumns='repeat(4, 1fr)' alignItems={'center'} margin={0} paddingX={8} paddingY={2} w={'full'} bg={'gray.50'} _hover={{bg:'gray.100'}} borderBottom={1} borderColor={'red'} cursor={'pointer'} onClick={() => gotoDetail(attendance.id)}>
+                          <Grid templateColumns='repeat(4, 1fr)' alignItems={'center'} paddingX={8} paddingY={4} w={'full'} bg={'gray.50'} _hover={{bg:'gray.100'}} borderBottom={1} borderColor={'red'} cursor={'pointer'} onClick={() => gotoDetail(attendance.id)}>
                           <GridItem>
                           </GridItem>
                           <GridItem textAlign={'left'}>
@@ -190,7 +190,7 @@ const AttendanceLog = () => {
                           </GridItem>
                           <GridItem textAlign={'right'} >
                             <Box>
-                              <ChevronRightIcon />
+                              <ChevronRightIcon boxSize={5} />
                             </Box>
                           </GridItem>
                         </Grid>

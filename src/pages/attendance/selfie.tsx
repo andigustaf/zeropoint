@@ -1,5 +1,6 @@
 import { Flex } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
 import Camera from 'react-html5-camera-photo';
 import 'react-html5-camera-photo/build/css/index.css';
 import { useAttendance } from '../../context/AttendanceContext';
@@ -14,8 +15,31 @@ const selfie = () => {
 
   const handleTakePhoto = async (dataUri) => {
     setAttendance({...attendance, base64Image:dataUri})
-    router.push('/attendance/form')
+    router.back()
+    router.replace('/attendance/selfie', '/attendance')
   }
+
+  const [windowDimention, setWindowDimention] = useState({
+    width:0,
+    height:0
+  })
+
+  const [idealWidth, setIdealWidth] = useState(0)
+
+  const getWindowDimention = () => {
+    const { innerWidth: width, innerHeight: height } = window
+    setWindowDimention({width, height})
+    setIdealWidth(width > height ? height : width)
+  }
+
+  useEffect(() => {
+    window.addEventListener("resize", getWindowDimention);
+    return () => window.removeEventListener("resize", getWindowDimention);
+  }, [])
+
+  useEffect(() => {
+    getWindowDimention()
+  }, [])
   
   return (
     <Flex
@@ -27,12 +51,15 @@ const selfie = () => {
       w="full"
     >
       <Camera
-        isFullscreen = {true}
+        isFullscreen = {false}
         imageType = {'jpg'}
         imageCompression={0.97}
         isMaxResolution={false}
         sizeFactor={1}
-        idealResolution = {{width: 120, height: 480}}
+        idealResolution = {{
+          width: idealWidth,
+          height: idealWidth
+        }}
         onTakePhoto = { (dataUri) => { handleTakePhoto(dataUri); } }
       />
     </Flex>
