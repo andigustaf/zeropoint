@@ -206,7 +206,7 @@ const AttendanceForm = () => {
                     </InputLeftElement>
                   ) : null}
                   <InputLeftElement width={'8.5rem'} paddingLeft={10}>
-                    <Button h='1.75rem' size='sm' onClick={takePhoto}>
+                    <Button h='1.75rem' size='sm' bg='gray.100' color={'gray.800'} onClick={takePhoto}>
                       Take Photo
                     </Button>
                   </InputLeftElement>
@@ -215,33 +215,6 @@ const AttendanceForm = () => {
                 <Button isLoading={isLoading} textTransform={'capitalize'} colorScheme='blue' w="full" onClick={() => clock(attendance.type)}>
                   { formatAttendanceType(attendance.type) }
                 </Button>
-                {/* <Button onClick={async() => {
-                  let date = new Date()
-                  const startOfDay = new Date(date.getFullYear(), date.getMonth(), date.getDate(), 0, 0, 0)
-                  const endOfDay = new Date(date.getFullYear(), date.getMonth(), date.getDate(), 23, 59, 59)
-                  const snapshot = await getDocs(query(
-                    collection(firestore, 'checklogs'),
-                    orderBy('timestamp', 'desc'),
-                    where('email', '==', user.email),
-                    where('timestamp', '>=', Timestamp.fromDate(startOfDay)),
-                    where('timestamp', '<=', Timestamp.fromDate(endOfDay)),
-                  ))
-                  if (!snapshot.empty && snapshot.docs[0]) {
-                    let date = format(new Date(snapshot.docs[0].data().timestamp.seconds * 1000), 'Ymd HH:ii:ss')
-                      console.log({
-                        firstRow: true,
-                        ...snapshot.docs[0].data(), display_date: date
-                      })
-                    for (const doc of snapshot.docs) {
-                      let date = format(new Date(doc.data().timestamp.seconds * 1000), 'Ymd HH:ii:ss')
-                      console.log({
-                        ...doc.data(), display_date: date
-                      })
-                    }
-                  }
-                }}>
-                  Cek validation
-                </Button> */}
               </Stack>
             </Box>
           </Flex>

@@ -109,8 +109,8 @@ const Index = () => {
             w="full"
             maxW="md"
           >
-            <Tag paddingY={2} w="full" bg="blue.50" fontWeight="normal" justifyContent="center" alignItems="center">
-                <WarningIcon />
+            <Tag paddingY={2} w="full" bg="primary.10" fontWeight="normal" justifyContent="center" alignItems="center">
+                <WarningIcon color={'gray.700'} />
                 <Text size={'xs'} marginLeft={1}>Selfie photo is required to Clock In/Out</Text>
             </Tag>
             <Grid templateColumns='repeat(2, 1fr)' mt={4} gap={6}>

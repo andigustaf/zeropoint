@@ -68,11 +68,13 @@ const photo = () => {
         />
         <IconButton
           mt={6}
-          size={'lg'}
+          width={'48px'}
           variant={'solid'}
+          bg={'gray.100'}
+          color={'gray.700'}
           rounded={'full'}
           aria-label='take photo'
-          icon={<FiCamera/>}
+          icon={<FiCamera width={8} height={8} />}
           onClick={capture}
         />
       </Box>

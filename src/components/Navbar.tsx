@@ -6,7 +6,7 @@ export const Navbar = () => {
   const { user, logout } = useAuth()
   return (
     <>
-      <Box zIndex={2} bg={useColorModeValue('blue.500', 'gray.900')} px={4} position={'fixed'} w={'full'}>
+      <Box zIndex={2} bg={useColorModeValue('primary.50', 'gray.900')} px={4} position={'fixed'} w={'full'}>
         <Flex h={16} alignItems={'center'} justifyContent={'space-between'}>
           <Stack spacing={0} color={'white'}>
             <Text fontWeight={'semibold'}>{ user.displayName }</Text>
