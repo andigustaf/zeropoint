@@ -198,8 +198,6 @@ const Datatable = ({
               <FiSearch color="gray.300" />
             </InputLeftElement>
             <Input
-              bg="white"
-              boxShadow="sm"
               value={pagination.search}
               onChange={(e) =>
                 setPagination({ ...pagination, search: e.target.value })
@@ -379,7 +377,7 @@ const Datatable = ({
               });
             }}
           >
-            {[10, 25, 50, 100, 500, 1000].map((pageSize) => (
+            {[100, 500, 1000].map((pageSize) => (
               <option key={pageSize} value={pageSize}>
                 Show {pageSize}
               </option>
