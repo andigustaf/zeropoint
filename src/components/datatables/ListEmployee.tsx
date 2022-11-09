@@ -16,26 +16,26 @@ const ListEmployee = ({
       Header: '#',
       maxWidth: 20,
       Cell: ({ row }) => (
-        <Avatar name='Dan Abrahmov' src='https://bit.ly/dan-abramov' />
+        <Avatar name={row?.original?.displayName} src={row?.original?.image} />
       )
     },
     {
       Header: 'Nama',
-      accessor: 'name',
+      accessor: 'displayName',
     },
     {
       Header: 'Email',
       accessor: 'email',
     },
-    {
-      Header: "Aksi",
-      Cell: ({ row }) => (
-        <HStack>
-          <Button size="sm">Edit</Button>
-          <Button size="sm">Delete</Button>
-        </HStack>
-      ),
-    }
+    // {
+    //   Header: "Tindakan",
+    //   Cell: ({ row }) => (
+    //     <HStack>
+    //       <Button size="sm">Edit</Button>
+    //       <Button size="sm">Delete</Button>
+    //     </HStack>
+    //   ),
+    // }
   ], []);
   return (
     <Datatable

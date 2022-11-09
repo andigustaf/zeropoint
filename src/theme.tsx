@@ -1,5 +1,10 @@
 import { extendTheme } from '@chakra-ui/react'
 import { createBreakpoints, StyleConfig, StyleFunctionProps } from '@chakra-ui/theme-tools'
+import { inputAnatomy } from '@chakra-ui/anatomy'
+import { createMultiStyleConfigHelpers } from '@chakra-ui/react'
+
+const { definePartsStyle, defineMultiStyleConfig } =
+  createMultiStyleConfigHelpers(inputAnatomy.keys)
 
 const fonts = { 
   body: `'Inter', sans-serif` ,
@@ -97,9 +102,54 @@ const button: StyleConfig = {
   },
 };
 
+const input: StyleConfig = {
+  baseStyle: {
+    fontWeight: 'regular',
+    borderRadius: '0.5rem',
+    h: '48px'
+  },
+  variants: {
+    outline: {
+      bg: 'white',
+      color: 'primary.50',
+      borderColor: 'primary.50',
+      _hover: {
+        bg: 'transparent',
+        color: 'primary.50',
+        borderColor: 'primary.50',
+      },
+      _active: {
+        bg: 'transparent',
+        color: 'primary.50',
+        borderColor: 'primary.50',
+      },
+    },
+  },
+  // defaultProps: {
+  //   size: 'md',
+  //   variant: 'outline',
+  // },
+};
+
 const theme = extendTheme({
   components: {
-    Button: button
+    Button: button,
+    Input: defineMultiStyleConfig({
+      variants: {
+        outline: {
+          field: {
+            bg: 'white',
+            fontSize: '16px',
+            _focus: {
+              borderColor: 'primary.50'
+            },
+            _disabled: {
+              bg: 'basic.20'
+            }
+          },
+        },
+      }
+    }),
   },
   semanticTokens: {
     colors: {
