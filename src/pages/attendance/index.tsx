@@ -22,16 +22,12 @@ const Index = () => {
       where('email', '==', user.email),
       where('timestamp', '>=', Timestamp.fromDate(startOfDay)),
       where('timestamp', '<=', Timestamp.fromDate(endOfDay)),
-      // limit(6)
     )
 
     const unsubscribe = onSnapshot(q, (snapshot) => {
       const items = []
       for (const doc of snapshot.docs) {
-        items.push({
-          id: doc.id,
-          data:doc.data()
-        })
+        items.push({id: doc.id, ...doc.data()})
       }
       setAttendances([...items])
     })
@@ -141,23 +137,32 @@ const Index = () => {
           >
           <Flex bg="white" justifyContent="space-between" p={2} paddingX={4} roundedTop={"lg"} >
             <Text fontWeight={'semibold'}>Attendance Log</Text>
-            {/* <Text><Button onClick={()=>gotoLogs()} size={'sm'} variant={'link'}>View Log</Button></Text> */}
+            <Text><Button onClick={()=>gotoLogs()} size={'sm'} variant={'link'}>View Log</Button></Text>
           </Flex>
             <TableContainer>
               <Table variant='simple'>
                   <Tbody>
                     {
-                      attendances.map(item => (
-                        <Tr key={item.id} _hover={{bg:'gray.50', cursor: 'pointer'}} onClick={()=>gotoDetail(item.id)}>
-                          <Td> { formatTimestamp(item.data.timestamp.seconds) } </Td>
-                          <Td textTransform={'capitalize'}>{ formatAttendanceType(item.data.type) }</Td>
-                          <Td>
-                            <Box textAlign="right">
-                              <ChevronRightIcon />
-                            </Box>
+                      attendances.length > 0 ? (
+                        attendances.map(item => (
+                          <Tr key={item.id} _hover={{bg:'gray.50', cursor: 'pointer'}} onClick={()=>gotoDetail(item.id)}>
+                            <Td> { formatTimestamp(item.timestamp.seconds * 1000) } </Td>
+                            <Td textTransform={'capitalize'}>{ formatAttendanceType(item.type) }</Td>
+                            <Td>
+                              <Box textAlign="right">
+                                <ChevronRightIcon />
+                              </Box>
+                            </Td>
+                          </Tr>
+                        ))
+                      ) : (
+                        <Tr>
+                          <Td textAlign={'center'} fontSize={'sm'} paddingY={8}>
+                            <Text color={'gray.700'} fontWeight={'semibold'}>No activity log today</Text>
+                            <Text color={'gray.500'}>Your check in/out activity will show here</Text>
                           </Td>
                         </Tr>
-                      ))
+                      )
                     }
                   </Tbody>
               </Table>

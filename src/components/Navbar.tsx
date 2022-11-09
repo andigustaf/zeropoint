@@ -24,6 +24,7 @@ export const Navbar = () => {
                   minW={0}>
                   <Avatar
                     size={'sm'}
+                    src={user.image}
                   />
                 </MenuButton>
                 <MenuList>
