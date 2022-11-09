@@ -102,54 +102,27 @@ const button: StyleConfig = {
   },
 };
 
-const input: StyleConfig = {
-  baseStyle: {
-    fontWeight: 'regular',
-    borderRadius: '0.5rem',
-    h: '48px'
-  },
+const input = defineMultiStyleConfig({
   variants: {
     outline: {
-      bg: 'white',
-      color: 'primary.50',
-      borderColor: 'primary.50',
-      _hover: {
-        bg: 'transparent',
-        color: 'primary.50',
-        borderColor: 'primary.50',
-      },
-      _active: {
-        bg: 'transparent',
-        color: 'primary.50',
-        borderColor: 'primary.50',
+      field: {
+        bg: 'white',
+        fontSize: '16px',
+        _focus: {
+          borderColor: 'primary.50'
+        },
+        _disabled: {
+          bg: 'basic.20'
+        }
       },
     },
-  },
-  // defaultProps: {
-  //   size: 'md',
-  //   variant: 'outline',
-  // },
-};
+  }
+})
 
 const theme = extendTheme({
   components: {
     Button: button,
-    Input: defineMultiStyleConfig({
-      variants: {
-        outline: {
-          field: {
-            bg: 'white',
-            fontSize: '16px',
-            _focus: {
-              borderColor: 'primary.50'
-            },
-            _disabled: {
-              bg: 'basic.20'
-            }
-          },
-        },
-      }
-    }),
+    Input: input,
   },
   semanticTokens: {
     colors: {
