@@ -75,7 +75,7 @@ const AttendanceDetail = () => {
                 <Flex paddingX={4}>
                   <Stack w={'full'} spacing={0}>
                     <Text fontWeight={'semibold'}>Checked Time</Text>
-                    <Text>{ format(new Date(attendance.timestamp.seconds * 1000), 'HH:mm a') }</Text>
+                    <Text>{ format(new Date(attendance.timestamp.seconds * 1000), 'hh:mm a') }</Text>
                   </Stack>
                   <Stack w={'full'}>
                   <Text fontWeight={'semibold'}>Type</Text>
@@ -87,6 +87,7 @@ const AttendanceDetail = () => {
                   <Text fontWeight={'semibold'}>Date</Text>
                   <Text>{ format(new Date(attendance.timestamp.seconds * 1000), 'ccc, dd MMM yyyy') }</Text>
                 </Box>
+                <Divider />
                 <Box paddingX={4}>
                   <Text fontWeight={'semibold'}>Notes</Text>
                   <Text>{ attendance.note || '-' }</Text>

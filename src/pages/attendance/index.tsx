@@ -7,6 +7,7 @@ import { useEffect, useState } from 'react';
 import { useAttendance } from '../../context/AttendanceContext';
 import { useRouter } from 'next/router';
 import { Navbar } from '../../components/Navbar';
+import { format } from 'date-fns';
 
 const Index = () => {
   const { user } = useAuth()
@@ -69,13 +70,11 @@ const Index = () => {
   }
   
   return (
-    <>
+    <Box>
       <Navbar />
       <Flex
         justify="center"
-        minH={"100vh"}
         pt={6}
-        bg="gray.100"
         w="full"
       >
         <Box w="full" maxW={"lg"} px={6}>
@@ -91,12 +90,7 @@ const Index = () => {
               })}
             </Heading>
             <Text size='sm' align={'center'}>
-              {dateState.toLocaleDateString('en-US', {
-                weekday: 'short',
-                day: 'numeric',
-                month: 'short',
-                year: 'numeric',
-              })}
+              { format(dateState, 'ccc, d MMM yyyy') }
             </Text>
           </Stack>
 
@@ -170,7 +164,7 @@ const Index = () => {
           </Box>
         </Box>
       </Flex>
-    </>
+    </Box>
     );
   }
   

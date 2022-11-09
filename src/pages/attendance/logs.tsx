@@ -1,4 +1,4 @@
-import { Accordion, AccordionButton, AccordionItem, AccordionPanel, Box, Flex, Grid, GridItem, Icon, Input, InputGroup, InputLeftElement, InputRightElement, Spacer, Stack, Text } from '@chakra-ui/react'
+import { Accordion, AccordionButton, AccordionItem, AccordionPanel, Box, Divider, Flex, Grid, GridItem, Icon, Input, InputGroup, InputLeftElement, InputRightElement, Spacer, Stack, Text } from '@chakra-ui/react'
 import { collection, Timestamp, query, where, getDocs, orderBy } from "firebase/firestore";
 import { firestore } from '../../config/firebase';
 import { ChevronRightIcon } from '@chakra-ui/icons'
@@ -8,9 +8,11 @@ import { format } from 'date-fns';
 import { Navbar } from '../../components/Navbar';
 import { FiCalendar, FiMinusSquare, FiPlusSquare } from 'react-icons/fi';
 import ReactDatePicker from "react-datepicker";
+import { useRouter } from 'next/router';
 
 const AttendanceLog = () => {
   const { user } = useAuth()
+  const router = useRouter()
   const [dateList, setDateList] = useState([])
   const [groupedAttendance, setGroupedAttendance] = useState([])
   const [date, setDate] = useState(new Date())
@@ -20,13 +22,13 @@ const AttendanceLog = () => {
     _date.setFullYear(currentPeriod.year, currentPeriod.month, 1)
     const currentDate = new Date()
     let maxDate = currentDate.getDate()
-    
-    if (format(_date, 'YM') < format(currentDate, 'YM')) {
+    if (format(_date, 'YMM') < format(currentDate, 'YMM')) {
       _date.setFullYear(_date.getFullYear(), _date.getMonth() +1, 0)
       maxDate = _date.getDate()
-    } else if (format(_date, 'YM') > format(currentDate, 'YM')) {
+    } else if (format(_date, 'YMM') > format(currentDate, 'YMM')) {
       setDateList([])
       return
+    } else{
     }
 
     const dateListTmp = []
@@ -101,6 +103,11 @@ const AttendanceLog = () => {
     str = str.toLowerCase()
     return str
   }
+
+  const gotoDetail = (id : string) => {
+    router.push('/attendance/' + id)
+  }
+
   const customDateInput = ({ value, onClick, onChange }: any, ref: any) => (
     <Input
       
@@ -141,12 +148,12 @@ const AttendanceLog = () => {
       />
       </InputGroup>
     </Box>
-     <Stack w={'full'} mt={'75px'}>
+     <Stack w={'full'} mt={'72px'}>
       <Accordion allowMultiple>
         {
           groupedAttendance.map(g => {
             return (
-              <AccordionItem key={g.key} isDisabled={g.data.length > 0 ? false : true} paddingX={0} border={'none'} borderBottom={1}>
+              <AccordionItem key={g.key} isDisabled={g.data.length > 0 ? false : true} paddingX={0} borderBottom={1}>
                 {({ isExpanded }) => (
                   <>
                     <AccordionButton _expanded={{ bg: 'white', color: 'black' }}>
@@ -158,20 +165,21 @@ const AttendanceLog = () => {
                           </Box>
                         </GridItem>
                         <GridItem textAlign={'left'}>
-                          <Text fontSize={'sm'}>{ g.clock_in ? format(new Date(g.clock_in.timestamp.seconds * 1000), 'hh:ss a') : '-' }</Text>
+                          <Text fontSize={'sm'}>{ g.clock_in ? format(new Date(g.clock_in.timestamp.seconds * 1000), 'hh:mm a') : '-' }</Text>
                         </GridItem>
                         <GridItem textAlign={'left'}>
-                          <Text fontSize={'sm'} paddingLeft={2}>{ g.clock_out ? format(new Date(g.clock_out.timestamp.seconds * 1000), 'hh:ss a') : '-' }</Text>
+                          <Text fontSize={'sm'} paddingLeft={2}>{ g.clock_out ? format(new Date(g.clock_out.timestamp.seconds * 1000), 'hh:mm a') : '-' }</Text>
                         </GridItem>
                         <GridItem textAlign="right">
                           <Icon as={ isExpanded ? FiMinusSquare : FiPlusSquare } />
                         </GridItem>
                       </Grid>
                     </AccordionButton>
-                    <AccordionPanel pb={4}>
+                    <AccordionPanel pb={4} marginX={-4}>
                       <Stack spacing={0}>
                       { g.data.map(attendance => (
-                        <Grid key={attendance.id} templateColumns='repeat(4, 1fr)' alignItems={'center'} margin={0} paddingX={4} paddingY={2} w={'full'} bg={'gray.100'}>
+                        <div key={attendance.id}>
+                          <Grid templateColumns='repeat(4, 1fr)' alignItems={'center'} margin={0} paddingX={8} paddingY={2} w={'full'} bg={'gray.50'} _hover={{bg:'gray.100'}} borderBottom={1} borderColor={'red'} cursor={'pointer'} onClick={() => gotoDetail(attendance.id)}>
                           <GridItem>
                           </GridItem>
                           <GridItem textAlign={'left'}>
@@ -186,6 +194,8 @@ const AttendanceLog = () => {
                             </Box>
                           </GridItem>
                         </Grid>
+                        <Divider />
+                        </div>
                       )) }
                     </Stack>
                     </AccordionPanel>
