@@ -17,12 +17,14 @@ export const Navbar = () => {
             <Stack direction={'row'} spacing={7}>
               <Menu>
                 <MenuButton
+                  aria-label='Avatar'
                   as={Button}
                   rounded={'full'}
                   variant={'link'}
                   cursor={'pointer'}
                   minW={0}>
                   <Avatar
+                    name={user.displayName}
                     size={'sm'}
                     src={user.image}
                   />

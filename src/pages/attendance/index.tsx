@@ -131,7 +131,7 @@ const Index = () => {
           >
           <Flex justifyContent="space-between" p={2} paddingX={4} roundedTop={"lg"} >
             <Text fontWeight={'semibold'}>Attendance Log</Text>
-            <Text><Button onClick={()=>gotoLogs()} size={'sm'} variant={'link'}>View Log</Button></Text>
+            <Text><Button onClick={()=>gotoLogs()} size={'sm'} variant={'link'} color={'gray.700'}>View Log</Button></Text>
           </Flex>
             <TableContainer>
               <Table variant='simple'>

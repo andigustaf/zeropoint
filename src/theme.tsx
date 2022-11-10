@@ -1,5 +1,5 @@
 import { extendTheme } from '@chakra-ui/react'
-import { createBreakpoints, StyleConfig, StyleFunctionProps } from '@chakra-ui/theme-tools'
+import { StyleConfig } from '@chakra-ui/theme-tools'
 import { inputAnatomy } from '@chakra-ui/anatomy'
 import { createMultiStyleConfigHelpers } from '@chakra-ui/react'
 
@@ -20,13 +20,13 @@ const fontSizes = {
   '2xl': '24px',
 }
 
-const breakpoints = createBreakpoints({
+const breakpoints = {
   sm: '375px',
   md: '768px',
   lg: '1024px',
   xl: '1280px',
   '2xl': '1440px'
-})
+}
 
 const button: StyleConfig = {
   baseStyle: {

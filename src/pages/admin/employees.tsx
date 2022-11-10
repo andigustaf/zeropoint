@@ -12,8 +12,6 @@ const Employee = () => {
     search: "",
   });
 
-  console.log(data)
-
   useEffect(() => {
     const q = query(
       collection(firestore, "users"),

@@ -7,18 +7,24 @@ import IndexLayout from '../layouts'
 import { AttendanceContextProvider } from '../context/AttendanceContext'
 import "react-datepicker/dist/react-datepicker.css";
 import '../components/chakra-react-datepicker.css'
+import Head from 'next/head'
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <AuthContextProvider>
-      <AttendanceContextProvider>
-        <ChakraProvider theme={theme}>
-          <IndexLayout>
-            <Component {...pageProps} />
-          </IndexLayout>
-        </ChakraProvider>
-      </AttendanceContextProvider>
-    </AuthContextProvider>
+    <>
+      <Head>
+        <title>ZeroPoint</title>
+      </Head>
+      <AuthContextProvider>
+        <AttendanceContextProvider>
+          <ChakraProvider theme={theme}>
+            <IndexLayout>
+              <Component {...pageProps} />
+            </IndexLayout>
+          </ChakraProvider>
+        </AttendanceContextProvider>
+      </AuthContextProvider>
+    </>
     
   )
 }

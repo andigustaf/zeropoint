@@ -2,12 +2,18 @@
     "theme_color": "#1155CC",
     "background_color": "#1155CC",
     "display": "standalone",
-    "scope": "",
+    "scope": "/",
     "start_url": "/",
     "name": "Zero Point",
     "short_name": "ZPoint",
     "description": "Simple attendance app",
     "icons": [
+        {
+            "src": "/icon-144x144.png",
+            "sizes": "144x144",
+            "type": "image/png",
+            "purpose": "any"
+        },
         {
             "src": "/icon-192x192.png",
             "sizes": "192x192",

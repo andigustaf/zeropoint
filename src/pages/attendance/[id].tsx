@@ -17,7 +17,6 @@ const AttendanceDetail = () => {
     const getAttendace = async () => {
       const querySnapshot = await getDoc(docRef);
       if(querySnapshot.exists()) {
-        console.log(querySnapshot.data());
         setAttendance({id: querySnapshot.id, ...querySnapshot.data() })
       } else {
         console.log("Document does not exist")

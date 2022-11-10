@@ -15,8 +15,6 @@ const ProtectedLayout = ({ children }: { children: React.ReactNode }) => {
     }
   }, [router, user])
 
-  console.log(user)
-
   return <>{user ? (
     <>
       <Box as="main">{children}</Box>

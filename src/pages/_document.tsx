@@ -4,9 +4,9 @@ import { ColorModeScript } from '@chakra-ui/react'
 export default class Document extends NextDocument {
   render() {
     return (
-      <Html>
+      <Html lang='en'>
         <Head>
-          <title>ZeroPoint</title>
+          <meta name="description" content="Simple attendance app" />
           <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
           <link rel="icon" href="/favicon.ico" type="image/x-icon" />
           <link rel="apple-touch-icon" sizes="57x57" href="/apple-icon-57x57.png" />
