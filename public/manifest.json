@@ -1,11 +1,11 @@
 {
-    "theme_color": "#1155CC",
-    "background_color": "#1155CC",
+    "theme_color": "#ffffff",
+    "background_color": "#ffffff",
     "display": "standalone",
     "scope": "/",
     "start_url": "/",
-    "name": "Zero Point",
-    "short_name": "ZPoint",
+    "name": "Zero Point Attendance",
+    "short_name": "Zero Point",
     "description": "Simple attendance app",
     "icons": [
         {
