@@ -160,7 +160,7 @@ const AttendanceForm = () => {
       >
         <Box w="full">
           <Box w="full" height={'225px'}>
-            <PigeonMap center={[coords?.latitude || 0,coords?.longitude || 0]} zoom={17} />
+            <PigeonMap center={[coords?.latitude || 0,coords?.longitude || 0]} zoom={15} />
           </Box>
 
           <Flex w="full" px={0} justifyContent={'center'}>

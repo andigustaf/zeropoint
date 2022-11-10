@@ -41,7 +41,6 @@ const AttendanceDetail = () => {
       <Navbar/>
       <Flex
         justify="center"
-        minH={"100vh"}
         bg="white"
         w="full"
       >
@@ -49,7 +48,10 @@ const AttendanceDetail = () => {
           <Box w="full">
           <Flex w="full" height={'225px'}>
             <Box w='full'>
-              <PigeonMap center={[0, 0]} zoom={17} />
+              <PigeonMap center={[
+                attendance.coordinate._lat,
+                attendance.coordinate._long,
+              ]} zoom={15} />
             </Box>
             <Box w='full' h="225px">
               <Image
@@ -78,8 +80,8 @@ const AttendanceDetail = () => {
                     <Text>{ format(new Date(attendance.timestamp.seconds * 1000), 'hh:mm a') }</Text>
                   </Stack>
                   <Stack w={'full'}>
-                  <Text fontWeight={'semibold'}>Type</Text>
-                    <Text textTransform={'capitalize'}>{ formatAttendanceType(attendance.type) }</Text>
+                    <Text fontWeight={'semibold'}>Type</Text>
+                    <Text marginTop={'unset !important'} textTransform={'capitalize'}>{ formatAttendanceType(attendance.type) }</Text>
                   </Stack>
                 </Flex>
                 <Divider />

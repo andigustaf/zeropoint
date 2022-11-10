@@ -4,7 +4,7 @@ const PigeonMap = ({center, zoom = 17}) => {
     return (
         <Map
             dprs={[1, 2]}
-            defaultCenter={[-6.9106699, 112.4620105]}
+            defaultCenter={center}
             defaultZoom={zoom}
             center={center}
             zoom={zoom}
