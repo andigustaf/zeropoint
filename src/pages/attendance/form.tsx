@@ -87,6 +87,21 @@ const AttendanceForm = () => {
         }
       }
 
+      const smartsellerHQ = {
+        latitude: -7.959593741394988,
+        longitude: 112.65176956905262
+      };
+      const googleHQ = {
+        latitude: 37.78971589416306,
+        longitude: -122.3900978730005
+      }
+
+      var dLat = (smartsellerHQ.latitude - (coords?.latitude || googleHQ.latitude)) * Math.PI / 180;
+      var dLon = (smartsellerHQ.longitude - (coords?.longitude || googleHQ.longitude)) * Math.PI / 180;
+      var a = 0.5 - Math.cos(dLat) / 2 + Math.cos((coords?.latitude || googleHQ.latitude) * Math.PI / 180) * Math.cos(smartsellerHQ.latitude * Math.PI / 180) * (1 - Math.cos(dLon)) / 2;
+      const distance = Math.round(6371000 * 2 * Math.asin(Math.sqrt(a)));
+      const is_wfo = distance <= 300
+
       const now = Date.now()
       const docRef = await addDoc(collection(firestore, "checklogs"), {
         email: user.email,
@@ -95,7 +110,8 @@ const AttendanceForm = () => {
         image_url: imageUrl,
         note: attendance.note,
         timestamp: new Timestamp(Math.floor(now / 1000), 0),
-        type
+        type,
+        is_wfo
       });
       setAttendance({...attendance, note:'', base64Image:'', imageUrl: ''})
       console.log("Document written with ID: ", docRef.id);

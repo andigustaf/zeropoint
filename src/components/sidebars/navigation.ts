@@ -1,12 +1,7 @@
 import {
-  IoCashOutline,
-  IoFileTrayFullOutline,
-  IoFlashOutline,
   IoHomeOutline,
   IoPeopleCircleOutline,
-  IoReceiptOutline,
-  IoStatsChartOutline,
-  IoTrendingUp,
+  IoCheckmarkDoneSharp,
 } from "react-icons/io5";
 import { IconType } from "react-icons";
 
@@ -32,6 +27,13 @@ export const menus: Menu[] = [
     url: "/admin/employees",
     icon: IoPeopleCircleOutline,
     title: "Karyawan",
+    items: [],
+  },
+  {
+    role: ["admin"],
+    url: "/admin/attendances",
+    icon: IoCheckmarkDoneSharp,
+    title: "Presensi",
     items: [],
   },
 ];

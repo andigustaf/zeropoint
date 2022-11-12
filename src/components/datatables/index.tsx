@@ -45,6 +45,7 @@ interface Props {
   setPagination: any;
   pagination: any;
   total: any;
+  datefilter?: JSX.Element;
   header?: JSX.Element;
   side?: JSX.Element;
   searchSize?: string;
@@ -68,6 +69,7 @@ const Datatable = ({
   pagination,
   total,
   header,
+  datefilter,
   side,
   searchSize = "70%",
   isLoading = false,
@@ -193,6 +195,13 @@ const Datatable = ({
           w="full"
           spacing={4}
         >
+          {datefilter && (
+            <Stack
+              maxW={'100%'}
+            >
+              {datefilter}
+            </Stack>
+          )}
           <InputGroup w={["", "", "", searchSize]}>
             <InputLeftElement pointerEvents="none">
               <FiSearch color="gray.300" />
@@ -260,7 +269,14 @@ const Datatable = ({
                         {...column.getHeaderProps(
                           column.getSortByToggleProps()
                         )}
+
+                        zIndex={column.zIndex}
+                        position={column.position}
+                        left={column.totalLeft}
+                        _after={column._after}
+                        textAlign={column.textAlign}
                         isNumeric={column.isNumeric}
+
                         key={idx + 1}
                       >
                         <Text
@@ -310,6 +326,12 @@ const Datatable = ({
                                 width: cell.column.width,
                               },
                             })}
+
+                            zIndex={cell.column.zIndex}
+                            position={cell.column.position}
+                            left={cell.column.totalLeft}
+                            _after={cell.column._after}
+                            
                             fontSize="md"
                             padding="1rem !important"
                             isNumeric={cell.column.isNumeric}
