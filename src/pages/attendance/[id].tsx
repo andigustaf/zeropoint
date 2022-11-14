@@ -40,64 +40,67 @@ const AttendanceDetail = () => {
       <Navbar/>
       <Flex
         justify="center"
-        bg="white"
         w="full"
+        align={'center'}
       >
-        { attendance ? (
-          <Box w="full">
-          <Flex w="full" height={'225px'}>
-            <Box w='full'>
-              <PigeonMap center={[
-                attendance.coordinate._lat,
-                attendance.coordinate._long,
-              ]} zoom={15} />
-            </Box>
-            <Box w='full' h="225px">
-              <Image
-                w="full"
-                h="full"
-                backgroundImage={attendance?.image_url}
-                backgroundSize="cover"
-                object-fit="cover"
-              />
-            </Box>
-          </Flex>
+        <Box w='full' maxW={'lg'}>
+          { attendance ? (
+            <Box w="full">
+            <Flex w="full" height={{base:'225px', md:'320px'}}>
+              <Box w='full'>
+                <PigeonMap center={[
+                  attendance.coordinate._lat,
+                  attendance.coordinate._long,
+                ]} zoom={15} />
+              </Box>
+              <Box w='full' height={{base:'225px', md:'320px'}}>
+                <Image
+                  w="full"
+                  h="full"
+                  backgroundImage={attendance?.image_url}
+                  backgroundPosition={'center'}
+                  backgroundSize="cover"
+                  object-fit="cover"
+                />
+              </Box>
+            </Flex>
 
-          <Flex w="full" px={0} justifyContent={'center'}>
-            <Box
-              marginTop={{base:0, md:6}}
-              rounded={"lg"}
-              bg="white"
-              paddingY={6}
-              w="full"
-              maxW="md"
-            >
-              <Stack spacing={4}>
-                <Flex paddingX={4}>
-                  <Stack w={'full'} spacing={0}>
-                    <Text fontWeight={'semibold'}>Checked Time</Text>
-                    <Text>{ format(new Date(attendance.timestamp.seconds * 1000), 'hh:mm a') }</Text>
-                  </Stack>
-                  <Stack w={'full'}>
-                    <Text fontWeight={'semibold'}>Type</Text>
-                    <Text marginTop={'unset !important'} textTransform={'capitalize'}>{ formatAttendanceType(attendance.type) }</Text>
-                  </Stack>
-                </Flex>
-                <Divider />
-                <Box paddingX={4}>
-                  <Text fontWeight={'semibold'}>Date</Text>
-                  <Text>{ format(new Date(attendance.timestamp.seconds * 1000), 'ccc, dd MMM yyyy') }</Text>
-                </Box>
-                <Divider />
-                <Box paddingX={4}>
-                  <Text fontWeight={'semibold'}>Notes</Text>
-                  <Text>{ attendance.note || '-' }</Text>
-                </Box>
-              </Stack>
-            </Box>
-          </Flex>
+            <Flex w="full" px={0} justifyContent={'center'}>
+              <Box
+                marginTop={{base:0, md:6}}
+                rounded={"lg"}
+                bg="white"
+                paddingY={6}
+                w="full"
+                maxW="md"
+              >
+                <Stack spacing={4}>
+                  <Flex paddingX={4}>
+                    <Stack w={'full'} spacing={0}>
+                      <Text fontWeight={'semibold'}>Checked Time</Text>
+                      <Text>{ format(new Date(attendance.timestamp.seconds * 1000), 'hh:mm a') }</Text>
+                    </Stack>
+                    <Stack w={'full'}>
+                      <Text fontWeight={'semibold'}>Type</Text>
+                      <Text marginTop={'unset !important'} textTransform={'capitalize'}>{ formatAttendanceType(attendance.type) }</Text>
+                    </Stack>
+                  </Flex>
+                  <Divider />
+                  <Box paddingX={4}>
+                    <Text fontWeight={'semibold'}>Date</Text>
+                    <Text>{ format(new Date(attendance.timestamp.seconds * 1000), 'ccc, dd MMM yyyy') }</Text>
+                  </Box>
+                  <Divider />
+                  <Box paddingX={4}>
+                    <Text fontWeight={'semibold'}>Notes</Text>
+                    <Text>{ attendance.note || '-' }</Text>
+                  </Box>
+                </Stack>
+              </Box>
+            </Flex>
+          </Box>
+          ) : null }
         </Box>
-        ) : null }
       </Flex>
     </>
     );

@@ -175,7 +175,7 @@ const AttendanceForm = () => {
         w="full"
       >
         <Box w="full">
-          <Box w="full" height={'225px'}>
+          <Box w="full" height={{base:'225px', md:'320px'}}>
             <PigeonMap center={[coords?.latitude || 0,coords?.longitude || 0]} zoom={15} />
           </Box>
 

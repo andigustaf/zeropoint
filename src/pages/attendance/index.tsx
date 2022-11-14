@@ -16,30 +16,28 @@ const Index = () => {
   const [dateState, setDateState] = useState(new Date())
   const [attendances, setAttendances] = useState([])
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const startOfDay = new Date(dateState.getFullYear(), dateState.getMonth(), dateState.getDate(), 0, 0, 0)
-      const endOfDay = new Date(dateState.getFullYear(), dateState.getMonth(), dateState.getDate(), 23, 59, 59)
-      const q = query(collection(firestore, "checklogs"),
-        where('email', '==', user.email),
-        where('timestamp', '>=', Timestamp.fromDate(startOfDay)),
-        where('timestamp', '<=', Timestamp.fromDate(endOfDay)),
-        orderBy('timestamp')
-      )
-  
-      const snapshot = await getDocs(q)
-      const items = [] 
-      if (!snapshot.empty) {
-        for (const doc of snapshot.docs) {
-          items.push({id: doc.id, ...doc.data()})
-        }
-      }
-      setAttendances([...items])
-    }
+  const fetchData = async () => {
+    const startOfDay = new Date(dateState.getFullYear(), dateState.getMonth(), dateState.getDate(), 0, 0, 0)
+    const endOfDay = new Date(dateState.getFullYear(), dateState.getMonth(), dateState.getDate(), 23, 59, 59)
+    const q = query(collection(firestore, "checklogs"),
+      where('email', '==', user.email),
+      where('timestamp', '>=', Timestamp.fromDate(startOfDay)),
+      where('timestamp', '<=', Timestamp.fromDate(endOfDay)),
+      orderBy('timestamp')
+    )
 
-    return () => {
-      fetchData()
+    const snapshot = await getDocs(q)
+    const items = [] 
+    if (!snapshot.empty) {
+      for (const doc of snapshot.docs) {
+        items.push({id: doc.id, ...doc.data()})
+      }
     }
+    setAttendances([...items])
+  }
+
+  useEffect(() => {
+    fetchData()
   }, [])
   
   useEffect(() => {
