@@ -1,4 +1,43 @@
+# Zeropoint
+
+Simple attendance app built from react with Google as backend, AWS s3 for storage
+
+# Prerequisite
+
+- Google Firebase Json conf
+
+```json
+{
+    "apiKey": "AIxxxx",
+    "authDomain": "",
+    "databaseURL": "",
+    "projectId": "",
+    "storageBucket": "",
+    "messagingSenderId": "",
+    "appId": "",
+    "measurementId": ""
+}
+```
+
+- AWS Json conf
+
+```json
+{
+  "accessKeyId":"",
+  "secretAccessKey":"",
+  "region":"",
+  "bucket" : "",
+  "bucket-url" : ""
+}
+```
+
 # Running
+
+
+
+Add json config 
+
+
 Steps to run
 
 `yarn install && yarn build`
