@@ -24,8 +24,9 @@ export const AuthContextProvider = ({
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
-      if (user) {
-        setUser({
+      setUser (null)
+      if (user && user.email.match("@.*ngorder.id|@smartseller.co.id|@.*bukalapak.com")) {
+        setUser ({
           uid: user.uid,
           email: user.email,
           displayName: user.displayName,
@@ -38,12 +39,9 @@ export const AuthContextProvider = ({
         }, {
           merge: true
         });
-      } else {
-        setUser(null)
       }
       setLoading(false)
     })
-
     return () => unsubscribe()
   }, [])
 

@@ -54,7 +54,7 @@ const Login = () => {
             Simple Attendance App
           </Text>
           <Text fontSize={"md"} color={"gray.600"}>
-            Sign in to use of our cool features ✌️
+           Mangga masuk ✌️
           </Text>
           </Stack>
           <Button colorScheme='blue' mt={2} w="full" onClick={handleLogin}>Sign In Now</Button>

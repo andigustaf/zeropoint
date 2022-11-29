@@ -1,6 +1,2 @@
-const cdnConfig = {
-    apiKey : 'bmdvcmRlci1hdHRlbmRhbmNlLWFwcA==',
-    url : 'https://cdn.cloudappsolution.com/api/media/images'
-}
-
-export default cdnConfig
+import awsConfig from './aws.json';
+export default awsConfig
