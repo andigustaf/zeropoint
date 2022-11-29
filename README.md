@@ -41,6 +41,7 @@ Add json config
 Steps to run
 
 `yarn install && yarn build`
+
 `next start`
 
 Using docker compose
