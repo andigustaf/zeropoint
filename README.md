@@ -31,12 +31,9 @@ Simple attendance app built from react with Google as backend, AWS s3 for storag
 }
 ```
 
+and place it under src/config
+
 # Running
-
-
-
-Add json config 
-
 
 Steps to run
 
