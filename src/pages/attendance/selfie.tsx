@@ -55,6 +55,7 @@ const selfie = () => {
         imageType = {'jpg'}
         imageCompression={0.97}
         isMaxResolution={false}
+        isImageMirror={true}
         sizeFactor={1}
         idealResolution = {{
           width: idealWidth,
