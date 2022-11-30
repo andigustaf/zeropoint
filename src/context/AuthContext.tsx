@@ -4,6 +4,7 @@ import {
   signInWithRedirect,
   signOut,
   onAuthStateChanged,
+  signInWithPopup,
 } from 'firebase/auth'
 import { auth, firestore } from '../config/firebase'
 import { User } from '../types'
@@ -48,7 +49,7 @@ export const AuthContextProvider = ({
   }, [])
 
   const login = async () => {
-    return signInWithRedirect(auth, provider)
+    return signInWithPopup(auth, provider)
   }
 
   const logout = async () => {
