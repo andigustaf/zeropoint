@@ -16,6 +16,7 @@ const Content = ({
   onClose?: any;
 }) => {
   const { pathname } = useRouter();
+  const { logout } = useAuth()
   return (
     <>
       <Box p={4}>
@@ -52,7 +53,7 @@ const Content = ({
           icon={<FiLogOut fontSize={24} />}
           aria-label="Logout"
           bg="transparent"
-          //   onClick={() => logoutMutation.mutate()}
+          onClick={logout}
           color="white"
           _hover={{
             bg: "transparent",

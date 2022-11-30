@@ -73,6 +73,7 @@ const Attendance = () => {
           ...item,
           clockIn: clockIn?.timestamp && format(clockIn?.timestamp?.toDate(), 'HH:mm'),
           clockOut: clockOut?.timestamp && format(clockOut?.timestamp?.toDate(), 'HH:mm'),
+          jam: ((clockOut?.timestamp - clockIn?.timestamp)/3600).toFixed(1) + " Jam",
           attendanceStatus
         }
       })

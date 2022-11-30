@@ -46,8 +46,6 @@ const AttendanceForm = () => {
                     items.push (doc.data ())
                 })
                 setAttendances (items)
-                console.log ('items:')
-                console.log (items)
             })
         return () => {
             unsub ()

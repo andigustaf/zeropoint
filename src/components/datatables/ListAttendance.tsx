@@ -41,6 +41,13 @@ const ListAttendance = ({
       ) : '-'
     },
     {
+      Header: 'Jam Bekerja',
+      accessor: 'jam',
+      Cell: ({ row }) => row?.original?.jam ? (
+          <Text textColor={'green.500'}>{row?.original?.jam}</Text>
+      ) : '-'
+    },
+    {
       Header: 'Status Bekerja',
       accessor: 'attendanceStatus',
       Cell: ({ row }) => row?.original?.attendanceStatus !== '-' ? (
