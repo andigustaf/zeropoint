@@ -17,6 +17,8 @@
 
 # production
 /build
+/public/sw.js
+/public/sw.js.map
 
 # misc
 .DS_Store
@@ -37,5 +39,7 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+#config files
 /src/config/aws.json
 /src/config/firebase.json
