@@ -1,5 +1,5 @@
 import { Box, Button, Flex, Grid, GridItem, Heading, Stack, Table, TableContainer, Tag, Tbody, Td, Text, Tr } from '@chakra-ui/react'
-import { collection, onSnapshot, query, where, Timestamp} from "firebase/firestore";
+import { collection, onSnapshot, query, where, Timestamp, orderBy, getDocs} from "firebase/firestore";
 import { firestore } from '../../config/firebase';
 import { WarningIcon, ChevronRightIcon } from '@chakra-ui/icons'
 import { useAuth } from '../../context/AuthContext';
@@ -16,26 +16,28 @@ const Index = () => {
   const [dateState, setDateState] = useState(new Date())
   const [attendances, setAttendances] = useState([])
 
-  useEffect(() => {
+  const fetchData = async () => {
     const startOfDay = new Date(dateState.getFullYear(), dateState.getMonth(), dateState.getDate(), 0, 0, 0)
     const endOfDay = new Date(dateState.getFullYear(), dateState.getMonth(), dateState.getDate(), 23, 59, 59)
     const q = query(collection(firestore, "checklogs"),
       where('email', '==', user.email),
       where('timestamp', '>=', Timestamp.fromDate(startOfDay)),
       where('timestamp', '<=', Timestamp.fromDate(endOfDay)),
+      orderBy('timestamp')
     )
 
-    const unsubscribe = onSnapshot(q, (snapshot) => {
-      const items = []
+    const snapshot = await getDocs(q)
+    const items = [] 
+    if (!snapshot.empty) {
       for (const doc of snapshot.docs) {
         items.push({id: doc.id, ...doc.data()})
       }
-      setAttendances([...items])
-    })
-
-    return () => {
-      unsubscribe()
     }
+    setAttendances([...items])
+  }
+
+  useEffect(() => {
+    fetchData()
   }, [])
   
   useEffect(() => {
@@ -74,7 +76,7 @@ const Index = () => {
       <Navbar />
       <Flex
         justify="center"
-        pt={6}
+        pt={12}
         w="full"
       >
         <Box w="full" maxW={"lg"} px={6}>
