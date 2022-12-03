@@ -12,7 +12,6 @@ const DetailAttendance = ({
   onClose,
   data
 }: ModalProps) => {
-  console.log(data)
   return (
     <>
       <Modal onClose={onClose} size={"xl"} isOpen={isOpen}>

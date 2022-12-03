@@ -33,8 +33,6 @@ const AttendanceForm = () => {
         items.push(doc.data())
       })
       setAttendances(items)
-      console.log('items:')
-      console.log(items)
     })
     return () => {
       unsub()
@@ -114,7 +112,6 @@ const AttendanceForm = () => {
         is_wfo
       });
       setAttendance({...attendance, note:'', base64Image:'', imageUrl: ''})
-      console.log("Document written with ID: ", docRef.id);
 
       toast({
         title: formatAttendanceType(type) + ' success',
@@ -125,7 +122,6 @@ const AttendanceForm = () => {
       setIsLoading(false)
       router.push('/attendance')
     } catch (e) {
-      console.log(e.message)
       setIsLoading(false)
       toast({
         title: formatAttendanceType(type) + ' failed',

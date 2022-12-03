@@ -46,7 +46,6 @@ const AttendanceLog = () => {
   }
 
   const getAttendances = async (startDate, endDate) => {
-    // console.log(`fetching data, start: ${format(startDate, 'Y-MM-dd HH:mm:ss')}, end: ${format(endDate, 'Y-MM-dd HH:mm:ss')}`)
     const items = []
     for (let dl of dateList) {
       items.push({key: dl.key, unixTimestamp:dl.unixTimestamp, data: []})
