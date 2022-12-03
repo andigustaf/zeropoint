@@ -82,7 +82,7 @@ const DetailAttendance = ({
                   </VStack>
                 </Stack>
               )}
-              {(!data?.clockInData && !data.clockOutData) && (
+              {(!data?.clockInData && !data?.clockOutData) && (
                 <VStack align={'center'} spacing={'8'}>
                   <Image w="11rem" src="https://app.smartseller.co.id/assets/img/illustration/no_customer.svg"></Image>
                   <Text fontSize={'xl'} fontWeight={'semibold'}>Upss... Not found</Text>
