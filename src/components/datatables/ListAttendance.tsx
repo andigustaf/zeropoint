@@ -13,6 +13,7 @@ const ListAttendance = ({
   pagination,
   setPagination,
   total,
+  onDetailOpen,
 }: ListProps) => {
   const columns = useMemo<Column<any>[]>(() => [
     {
@@ -54,14 +55,14 @@ const ListAttendance = ({
         <Badge colorScheme={row?.original?.attendanceStatus == 'WFO' ? 'green' : 'blue'}>{row?.original?.attendanceStatus}</Badge>
       ) : '-'
     },
-    // {
-    //   Header: "Tindakan",
-    //   Cell: ({ row }) => (
-    //     <HStack>
-    //       <Button size="xs">Detail</Button>
-    //     </HStack>
-    //   ),
-    // }
+    {
+      Header: "Tindakan",
+      Cell: ({ row }) => (
+        <HStack>
+          <Button size="xs" onClick={() => onDetailOpen(row.original)}>Detail</Button>
+        </HStack>
+      ),
+    }
   ], []);
   return (
     <Datatable
@@ -84,7 +85,7 @@ const ListAttendance = ({
           }}
           render={
             ({defaultValue, value, ...props}, ref) => {
-              return <Input defaultValue={defaultValue} ref={ref} mt="0" />
+              return <Input defaultValue={defaultValue} ref={ref} mt="0px !important" />
             }
           }
         />

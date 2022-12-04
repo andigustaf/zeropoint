@@ -19,13 +19,11 @@ const AttendanceDetail = () => {
       if(querySnapshot.exists()) {
         setAttendance({id: querySnapshot.id, ...querySnapshot.data() })
       } else {
-        console.log("Document does not exist")
       }
     }
     try {
       getAttendace()
     } catch (e) {
-      console.log(e)
     }
   }, [])
 

@@ -19,7 +19,6 @@ const Login = () => {
     try {
       await login()
     } catch (err) {
-      console.log(err)
     }
   }
 

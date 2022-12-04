@@ -20,9 +20,6 @@ const photo = () => {
   const getWindowDimention = () => {
     const { innerWidth: width, innerHeight: height } = window
     setWindowDimention({width, height})
-    console.log({
-      width, height
-    })
   }
 
   useEffect(() => {
