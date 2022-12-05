@@ -5,6 +5,7 @@ export interface ListProps {
     total: number;
     callback?: any;
     isLoading: boolean;
+
     [key: string]: any;
-  }
+}
   

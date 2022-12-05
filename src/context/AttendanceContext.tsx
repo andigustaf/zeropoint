@@ -1,14 +1,14 @@
-import { createContext, useContext, useState } from "react";
+import {createContext, useContext, useState} from "react";
 
 export const AttendanceContext = createContext<any>({})
 
 export const useAttendance = () => useContext(AttendanceContext)
 
-export const  AttendanceContextProvider = ({
-    children,
-  }: {
+export const AttendanceContextProvider = ({
+                                              children,
+                                          }: {
     children: React.ReactNode
-  }) => {
+}) => {
     const [attendance, setAttendance] = useState({
         type: 'CLOCK_IN',
         imageUrl: '',
@@ -17,8 +17,8 @@ export const  AttendanceContextProvider = ({
     })
 
     return (
-        <AttendanceContext.Provider value={{ attendance, setAttendance }}>
-          {children}
+        <AttendanceContext.Provider value={{attendance, setAttendance}}>
+            {children}
         </AttendanceContext.Provider>
-      )
+    )
 };

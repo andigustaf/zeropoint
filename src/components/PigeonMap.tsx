@@ -1,4 +1,4 @@
-import { Map, Marker, ZoomControl } from "pigeon-maps"
+import {Map, Marker, ZoomControl} from "pigeon-maps"
 
 const PigeonMap = ({center, zoom = 17}) => {
     return (
@@ -9,10 +9,10 @@ const PigeonMap = ({center, zoom = 17}) => {
             center={center}
             zoom={zoom}
         >
-            <ZoomControl />
-            <Marker width={50} anchor={center} />
+            <ZoomControl/>
+            <Marker width={50} anchor={center}/>
         </Map>
-      )
+    )
 }
 
 export default PigeonMap 
