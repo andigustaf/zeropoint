@@ -1,8 +1,28 @@
 
 import React from "react"
-import { Button, Modal, ModalOverlay, ModalContent, ModalHeader, ModalCloseButton, ModalBody, ModalFooter, HStack, VStack, Image, Text, SimpleGrid, Stack, Badge, Box, Divider } from "@chakra-ui/react"
+import {
+  Button,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalCloseButton,
+  ModalBody,
+  ModalFooter,
+  HStack,
+  VStack,
+  Image,
+  Text,
+  SimpleGrid,
+  Stack,
+  Badge,
+  Box,
+  Divider,
+  Flex
+} from "@chakra-ui/react"
 import { ModalProps } from "../../types/modal.type"
 import { format } from "date-fns";
+import PigeonMap from "../PigeonMap";
 
 const defaultImage = 'https://st4.depositphotos.com/14953852/22772/v/600/depositphotos_227725020-stock-illustration-no-image-available-icon-flat.jpg';
 
@@ -48,6 +68,16 @@ const DetailAttendance = ({
                         </Box>
                       </VStack>
                     </SimpleGrid>
+                    <SimpleGrid columns={4} spacing={4}>
+                      <VStack align={'stretch'} spacing="0">
+                          <Box w='full' height={{base:'280px'}} width={{base:'280px'}}>
+                            <PigeonMap center={[
+                              data?.clockInData?.coordinate._lat,
+                              data?.clockInData?.coordinate._long,
+                            ]} zoom={15} />
+                          </Box>
+                      </VStack>
+                    </SimpleGrid>
                   </VStack>
                 </Stack>
               )}
@@ -76,6 +106,26 @@ const DetailAttendance = ({
                         <Box>
                           <Badge colorScheme={data?.attendanceStatus == 'WFO' ? 'green' : 'blue'}>{data?.attendanceStatus}</Badge>
                         </Box>
+                      </VStack>
+                    </SimpleGrid>
+                    <SimpleGrid columns={2} spacing={4}>
+                      <VStack align={'stretch'} spacing="0">
+                        <PigeonMap center={[
+                          data?.clockOutData?.coordinate._lat,
+                          data?.clockOutData?.coordinate._long,
+                        ]} zoom={15} />
+                      </VStack>
+                    </SimpleGrid>
+                    <SimpleGrid columns={2} spacing={4}>
+                      <VStack align={'stretch'} spacing="0">
+                        <Flex w="full" height={{base:'280px'}} width={{base:'280px'}}>
+                          <Box w='full' >
+                            <PigeonMap center={[
+                              data?.clockInData?.coordinate._lat,
+                              data?.clockInData?.coordinate._long,
+                            ]} zoom={15} />
+                          </Box>
+                        </Flex>
                       </VStack>
                     </SimpleGrid>
                   </VStack>

@@ -25,7 +25,11 @@ const ListAttendance = ({
     },
     {
       Header: 'Nama',
-      accessor: 'displayName',
+      accessor: 'displayName'
+    },
+    {
+      Header: 'Email',
+      accessor: 'email'
     },
     {
       Header: 'Clock In',
